@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Research Paper Ideas</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f4f4f9;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    .search-box {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    input, button {
+      padding: 10px;
+      font-size: 16px;
+      margin: 5px;
+      cursor: pointer;
+    }
+    .paper {
+      background: white;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 8px;
+      box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
+    }
+    .paper h3 {
+      margin: 0;
+      color: #0077cc;
+    }
+    .paper p {
+      margin: 8px 0;
+      color: #444;
+    }
+    .idea {
+      margin-top: 10px;
+      padding: 10px;
+      background: #eaf6ff;
+      border-left: 4px solid #0077cc;
+      font-style: italic;
+      color: #222;
+    }
+    #pagination {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 20px;
+    }
+    #pagination button {
+      padding: 8px 15px;
+      border-radius: 5px;
+      border: none;
+      background: #0077cc;
+      color: white;
+      font-weight: bold;
+    }
+    #pagination button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+  <h1>Research Paper Idea Generator</h1>
+
+  <div class="search-box">
+    <input type="text" id="query" placeholder="Enter keyword (e.g., AI, IoT, Healthcare)">
+    <button onclick="searchPapers()">Search</button>
+  </div>
+
+  <div id="results"></div>
+  <div id="pagination" style="display:none;">
+    <button id="prevBtn" onclick="showPrev()">⬅ Previous</button>
+    <button id="nextBtn" onclick="showNext()">Next ➡</button>
+  </div>
+
+  <script>
+    let allPapers = [];
+    let currentIndex = 0;
+    const pageSize = 5;
+
+async function searchPapers() {
+  const query = document.getElementById("query").value || "ai";
+  const response = await fetch(`http://127.0.0.1:8000/get-papers?query=${query}`);
+  const data = await response.json();
+
+  allPapers = data.papers || [];  
+  currentIndex = 0;
+  document.getElementById("results").innerHTML = ""; // clear old results
+
+  if (allPapers.length === 0) {
+    document.getElementById("results").innerHTML = `
+      <div style="text-align:center; padding:20px; color:red; font-weight:bold;">
+         No research papers found for "<span style="color:#0077cc">${query}</span>"
+      </div>
+    `;
+    document.getElementById("loadMore").style.display = "none";
+    return;
+  }
+
+  showNext();
+}
+
+
+    function showPage() {
+      const resultsDiv = document.getElementById("results");
+      resultsDiv.innerHTML = "";
+
+      const pagePapers = allPapers.slice(currentIndex, currentIndex + pageSize);
+
+      pagePapers.forEach(paper => {
+        const paperDiv = document.createElement("div");
+        paperDiv.className = "paper";
+
+        paperDiv.innerHTML = `
+          <h3><a href="${paper.link}" target="_blank">${paper.title}</a></h3>
+          <p><strong>Abstract:</strong> ${paper.summary}</p>
+          <div class="idea"> Suggested Project Idea: ${paper.suggested_idea}</div>
+        `;
+
+        resultsDiv.appendChild(paperDiv);
+      });
+
+      document.getElementById("pagination").style.display = "flex";
+
+      // Disable/Enable buttons
+      document.getElementById("prevBtn").disabled = currentIndex === 0;
+      document.getElementById("nextBtn").disabled = currentIndex + pageSize >= allPapers.length;
+    }
+
+    function showNext() {
+      if (currentIndex + pageSize < allPapers.length) {
+        currentIndex += pageSize;
+        showPage();
+      }
+    }
+
+    function showPrev() {
+      if (currentIndex - pageSize >= 0) {
+        currentIndex -= pageSize;
+        showPage();
+      }
+    }
+  </script>
+</body>
+</html>
