@@ -1,21 +1,70 @@
-# idea_generator.py
+import itertools
 
-def generate_project_idea(title, summary):
-    text = (title + " " + summary).lower()
+DOMAIN_NAMES = {
+    "computer_science": "Computer Science",
+    "electronics": "Electronics & Communication",
+    "mechanical": "Mechanical Engineering",
+    "civil": "Civil Engineering",
+    "energy": "Energy & Power Systems",
+    "healthcare": "Healthcare & Biomedical",
+    "agriculture": "Agriculture & Food Technology",
+    "management": "Management & Business",
+    "education": "Education & E-Learning",
+    "environment": "Environmental Science & Sustainability"
+}
 
-    if "medical" in text or "health" in text:
-        return "Build an AI model to detect diseases from X-ray or health reports."
-    elif "traffic" in text or "vehicle" in text:
-        return "Create a smart traffic management simulation using real-time data."
-    elif "education" in text or "learning" in text:
-        return "Design a personalized learning assistant using AI for student support."
-    elif "robot" in text:
-        return "Develop a robot that can perform daily human tasks autonomously."
-    elif "finance" in text or "stock" in text:
-        return "Build a stock prediction system using historical data and AI models."
-    elif "iot" in text:
-        return "Create a smart home system using IoT devices and cloud control."
-    elif "agriculture" in text or "crop" in text:
-        return "Detect crop diseases using image classification and support farmers."
+TEMPLATES = [
+    "Design an AI/ML model inspired by '{title}' for {domain}.",
+    "Develop a novel application of '{title}' in {domain}.",
+    "Extend the ideas of '{title}' to build practical {domain} solutions.",
+    "Create a project applying '{title}' concepts for {domain} innovation.",
+    "Use '{title}' as the foundation for an AI-based {domain} system.",
+    "Implement a real-world solution by adapting '{title}' in {domain}.",
+    "Explore how '{title}' can enhance {domain} using AI/ML.",
+    "Build a prototype inspired by '{title}' for advancements in {domain}."
+]
+
+# Round-robin cycle for templates
+template_cycle = itertools.cycle(TEMPLATES)
+
+# Keywords to detect special themes
+KEYWORDS = {
+    "deep learning": "using deep learning techniques",
+    "machine learning": "leveraging machine learning models",
+    "neural network": "with neural network architectures",
+    "renewable": "to promote renewable energy",
+    "sustainability": "for sustainability solutions",
+    "climate": "to address climate challenges",
+    "iot": "with IoT-based innovations",
+    "blockchain": "using blockchain technology",
+    "agriculture": "to improve smart farming",
+    "health": "for improving healthcare services",
+    "education": "to support personalized education"
+}
+
+def clean_title(title, max_words=15):
+    words = title.split()
+    if len(words) > max_words:
+        return " ".join(words[:max_words]) + "..."
+    return title
+
+def extract_context(summary):
+    summary_lower = summary.lower()
+    for keyword, phrase in KEYWORDS.items():
+        if keyword in summary_lower:
+            return phrase
+    return None
+
+def generate_project_idea(title, summary, domain="computer_science"):
+    short_title = clean_title(title)
+    domain_name = DOMAIN_NAMES.get(domain, domain.replace("_", " ").title())
+
+    template = next(template_cycle)
+    base_idea = template.format(title=short_title, domain=domain_name)
+
+    # Add context if found
+    context_phrase = extract_context(summary)
+    if context_phrase:
+        return f"💡 Suggested Project Idea: {base_idea} ({context_phrase})."
     else:
-        return f"Apply the concept from this paper on '{title}' to a practical real-world project."
+        return f"💡 Suggested Project Idea: {base_idea}"
