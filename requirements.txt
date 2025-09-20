@@ -1,0 +1,3 @@
+fastapi==0.116.2
+feedparser==6.0.11
+Requests==2.32.5
