@@ -1,4 +1,4 @@
-# Project Idea Suggestion System
+# Project Idea Suggestion System 
 
 ## About
 This project suggests project ideas based on **research papers** fetched via backend API.  
@@ -15,9 +15,14 @@ Frontend is built with **HTML, CSS, and JavaScript**, while backend is powered b
 - **Frontend**: HTML, CSS, JavaScript  
 - **Backend**: FastAPI (Python)  
 
+## Contributers Name
+-**Amruta Katkar**
+-**Rutuja Patil**
 
 ## Setup & Run
 ### Backend
 ```bash
 cd ProjectIdea
 uvicorn main:app --reload
+
+
