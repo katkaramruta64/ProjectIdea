@@ -16,8 +16,8 @@ Frontend is built with **HTML, CSS, and JavaScript**, while backend is powered b
 - **Backend**: FastAPI (Python)  
 
 ## Contributers Name
--**Amruta Katkar**
--**Rutuja Patil**
+- **Amruta Katkar**
+- **Rutuja Patil**
 
 ## Setup & Run
 ### Backend
