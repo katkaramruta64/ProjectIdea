@@ -16,7 +16,7 @@ const pageSize = 5;
 async function searchPapers() {
     const query = document.getElementById("query").value || "ai";
     if (!navigator.onLine) {
-        document.getElementById("api-results").innerHTML = `<p style="color:red;">❌ No internet</p>`;
+        document.getElementById("api-results").innerHTML = `<p style="color:red;"> No internet</p>`;
         return;
     }
 
@@ -27,7 +27,7 @@ async function searchPapers() {
         currentIndex = 0;
 
         if (allPapers.length === 0) {
-            document.getElementById("api-results").innerHTML = `<p style="color:red;">⚠️ No papers found</p>`;
+            document.getElementById("api-results").innerHTML = `<p style="color:red;"> No papers found</p>`;
             return;
         }
 
@@ -36,7 +36,7 @@ async function searchPapers() {
 
     } catch (err) {
         console.error("Error:", err);
-        document.getElementById("api-results").innerHTML = `<p style="color:red;">⚠️ Failed to fetch papers</p>`;
+        document.getElementById("api-results").innerHTML = `<p style="color:red;"> Failed to fetch papers</p>`;
     }
 }
 
