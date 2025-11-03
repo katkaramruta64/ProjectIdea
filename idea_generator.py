@@ -65,6 +65,6 @@ def generate_project_idea(title, summary, domain="computer_science"):
     # Add context if found
     context_phrase = extract_context(summary)
     if context_phrase:
-        return f": {base_idea} ({context_phrase})."
+        return f" {base_idea} ({context_phrase})."
     else:
-        return f": {base_idea}"
+        return f" {base_idea}"
