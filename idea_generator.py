@@ -67,4 +67,4 @@ def generate_project_idea(title, summary, domain="computer_science"):
     if context_phrase:
         return f": {base_idea} ({context_phrase})."
     else:
-        return f"; {base_idea}"
+        return f": {base_idea}"
