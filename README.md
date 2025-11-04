@@ -18,8 +18,8 @@ Frontend is built with **HTML, CSS, and JavaScript**, while backend is powered b
 ## Contributers Name
 - **Amruta Katkar**
 - **Rutuja Patil**
--**Mruganayani tate**
--**AAkanksha Bugad**
+- **Mruganayani tate**
+- **AAkanksha Bugad**
 
 ## Setup & Run
 ### Backend
